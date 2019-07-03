@@ -1,7 +1,8 @@
 {
   "name": "react-object-logger",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "react object logger",
+  "repository": "promise-coding/react-object-logger",
   "main": "lib/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -10,7 +11,7 @@
     "deploy": "gh-pages -d example/dist",
     "publish-demo": "npm run build && npm run deploy"
   },
-  "keywords": [],
+  "keywords": ["react", "object", "logger", "对象日志变更展示"],
   "author": "daxiong",
   "license": "MIT",
   "devDependencies": {
