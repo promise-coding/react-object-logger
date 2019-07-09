@@ -1,5 +1,7 @@
-import React from 'react';
-const ReactDemo = () => (
- <h1>这是我的第一个 react npm 组件</h1>
-);
-export default ReactDemo;
+import React from 'react'
+import { render } from 'react-dom'
+import ReactDemo from './app'
+
+const App = () => <ReactDemo />;
+
+render(<App />, document.getElementById('root'));

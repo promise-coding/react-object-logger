@@ -1,0 +1,122 @@
+$primary-text-color-light: #868686;
+
+.logTitle {
+    font-size: 16px;
+    color: #9b9b9b;
+    font-weight: bold;
+    padding: 10px 5px;
+}
+
+.logInfo {
+    word-break: break-all;
+    font-size: 15px;
+    >.logIndex {
+        padding: 2px 5px;
+    }
+    .logToggle {
+        cursor: pointer;
+        position: relative;
+        top: 2px;
+        padding-right: 5px;
+    }
+    >.operator {
+        padding-right: 5px;
+        font-weight: bold;
+    }
+    >.logExtra {
+        color: $primary-text-color-light;
+        font-style: italic;
+    }
+    >.logTime {
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+    >.operationName {
+        padding-right: 5px;
+    }
+    >.objectName {
+        font-weight: bold;
+        padding-right: 5px;
+    }
+    >.comment {
+        color: $primary-text-color-light;
+        padding: 5px 32px;
+    }
+}
+
+.logAttr {
+    margin: 5px 32px;
+    padding: 5px 15px;
+    background-color: #f7f7f7;
+    .attrArea {
+        font-size: 14px;
+        .diffTextArea {
+            display: flex;
+            >.attributeName {
+                font-weight: bold;
+                padding-left: 5px;
+                padding-right: 5px;
+            }
+        }
+    }
+    .attachmentContent {
+        padding: 2px 15px;
+        .logFileWrapper {
+            .fileListWrapper {
+                >.content {
+                    .attachmentWrapper {
+                        >.fileItem, >.file {
+                            cursor: pointer;
+                            >.fileIcon {
+                                position: relative;
+                                top: 2px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        .fileTitle {
+            color: $primary-text-color-light;
+        }
+    }
+}
+
+.modalMask {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width:100%;
+    height:100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background-color:rgba(0, 0, 0, 0.5);
+    z-index:1000;
+    text-align:center;
+    font-size: 16px;
+    box-shadow:0 0 5px black;
+    >.modal{
+        position:relative;
+        z-index:1100;
+        background-clip: padding-box;
+        width: 100%;
+        height: 100%;
+        >img {
+            position: relative;
+            top: 100px;
+            max-width: 500px;
+            max-height: 500px;
+        }
+        >.closeModal {
+            position: fixed;
+            cursor: pointer;
+            color: white;
+            font-weight: bold;
+            top: 20px;
+            right: 30px;
+            font-size: 20px;
+        }
+    }
+}
