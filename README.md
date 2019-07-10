@@ -15,10 +15,16 @@
 `import ObjectLogger from 'react-object-logger';`    
 `import 'react-object-logger/lib/css/styles.css';`    
 3、使用  
-`<ObjectLogger logList={this.logList}></ObjectLogger>`  
+`<ObjectLogger logList={logList} lang="zh" fileUrl="http://localhost:9527/file" />`  
 注意：  
 `this.logList`格式及具体字段含义请参考[ObjectLogger](https://github.com/yeecode/ObjectLogger)：  
 也可以在本项目示例文件夹下进行对照参考：https://github.com/promise-coding/react-object-logger/tree/master/example/src   
+
+# 参数配置
+- `logList`；日志列表，数组类型；   
+-  `lang`：显示语言，目前支持英文和中文，lang="en"为英文展示，lang="zh"为中文展示，默认是英文；  
+-  `fileUrl`：如果修改的是文件类型，日志中展示源文件，需要一个文件存储的url，用于下载(可不设)；  
+其他配置项正在更新中...   
 
 附：
 logList数据样例  
