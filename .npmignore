@@ -3,5 +3,5 @@ src
 examples
 .babelrc
 .gitignore
-webpack.config.js
+webpack.dev.config.js
 .idea/

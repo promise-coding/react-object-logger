@@ -1,15 +1,15 @@
 {
   "name": "react-object-logger",
-  "version": "1.0.5",
+  "version": "1.0.8",
   "description": "react object logger",
   "repository": "promise-coding/react-object-logger",
   "main": "lib/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack-dev-server --progress --config webpack.config.js",
+    "start": "webpack-dev-server --progress --config webpack.dev.config.js",
     "transpile": "npx babel src --copy-files --out-dir lib",
-    "prepublishOnly": "npm run transplie",
-    "build-dev": "webpack --config webpack.config.js --progress --color",
+    "prepublishOnly": "npm run build-pro",
+    "build-dev": "webpack --config webpack.dev.config.js --progress --color",
     "build-pro": "webpack --config webpack.pro.config.js --progress --color",
     "deploy": "gh-pages -d example/dist",
     "publish-demo": "npm run build && npm run deploy"

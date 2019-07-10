@@ -2,12 +2,12 @@ const path = require('path');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const htmlWebpackPlugin = new HtmlWebpackPlugin({
-	template: path.join(__dirname, "./src/index.html"),
+	template: path.join(__dirname, "./example/src/index.html"),
 	filename: "./index.html"
 });
 
 module.exports = {
-	entry: path.join(__dirname, "./src/index.js"),
+	entry: path.join(__dirname, "./example/src/app.js"),
 	output: {
 		path: path.join(__dirname, "example/dist"),
 		filename: "[name].bundle.js"
@@ -27,7 +27,7 @@ module.exports = {
                 	{loader: 'css-loader',
 						options: { modules: {
                                 mode: 'local',
-                                localIdentName: '[path][name]__[local]--[hash:base64:5]'
+                                localIdentName: '[name]__[local]--[hash:base64:5]'
                             },}},
 					'sass-loader']
             })
@@ -41,7 +41,7 @@ module.exports = {
 		extensions: [".js", ".jsx"]
 	},
 	devServer: {
-		port: 3001
+		port: 3002
 	}
 };
 

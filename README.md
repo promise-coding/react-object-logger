@@ -8,9 +8,10 @@
 
 # 如何使用
 1、下载组件  
-`npm install react-object-logger`  
+`npm install react-object-logger`   
 2、应用组件  
-`import ObjectLogger from 'react-object-logger';`  
+`import ObjectLogger from 'react-object-logger';`    
+`import 'react-object-logger/lib/css/styles.css';`    
 3、使用  
 `<ObjectLogger logList={this.logList}></ObjectLogger>`  
 注意：  
