@@ -96,7 +96,7 @@ const logList = [
                 "actionId": 3761,
                 "attributeType": "ATTACHMENT",
                 "attribute": "attachment",
-                "attributeName": "附件",
+                "attributeName": "attachment",
                 "oldValue": null,
                 "newValue": null,
                 "diffValue": {del:[],add:[{belongTo:"ee",belongToStage:"ee",contentType:"application/pdf",fileId:"ee.DAT",fileName:"ee.pdf",fileSize:394411,fileType:"pdf",id:5474,isConfirmed:0,isDeleted:0,outerId:43170,uploadTime:1559788779000}]}
@@ -105,7 +105,7 @@ const logList = [
                 "actionId": 3766,
                 "attributeType": "ATTACHMENT",
                 "attribute": "attachment",
-                "attributeName": "附件",
+                "attributeName": "attachment",
                 "oldValue": null,
                 "newValue": null,
                 "diffValue": {del:[],add:[{belongTo:"ee",belongToStage:"ee",contentType:"image/png",fileId:"ee.DAT",fileName:"u753.png",fileSize:224098,fileType:"png",id:5500,isConfirmed:0,isDeleted:0,outerId:43170,uploadTime:1560330531000}]}
@@ -114,7 +114,7 @@ const logList = [
                 "actionId": 3672,
                 "attributeType": "ATTACHMENT",
                 "attribute": "attachment",
-                "attributeName": "附件",
+                "attributeName": "attachment",
                 "oldValue": null,
                 "newValue": null,
                 "diffValue": {del:[],add:[{belongTo:"ee",belongToStage:"ee",contentType:"image/jpeg",fileId:"ee.DAT",fileName:"Koala.jpg",fileSize:780831,fileType:"jpg",id:5471,isConfirmed:0,isDeleted:0,outerId:43170,uploadTime:1559532908000}]}
@@ -123,7 +123,7 @@ const logList = [
                 "actionId": 3965,
                 "attributeType": "ATTACHMENT",
                 "attribute": "attachment",
-                "attributeName": "附件",
+                "attributeName": "attachment",
                 "oldValue": null,
                 "newValue": null,
                 "diffValue": {del:[{belongTo:"ee",belongToStage:"ee",contentType:"image/jpeg",fileId:"ee.DAT",fileName:"Koala.jpg",fileSize:780831,fileType:"jpg",id:5471,isConfirmed:1,isDeleted:0,outerId:43170,uploadTime:1559532910000}],add:[]}
@@ -132,6 +132,7 @@ const logList = [
     }
 ];
 
-const App = () => <ObjectLogger logList={logList} lang="en" />;
+const App = () => <ObjectLogger logList={logList} lang="zh"
+                                fileUrl="http://localhost:9527/file" />;
 
 render(<App />, document.getElementById('root'));

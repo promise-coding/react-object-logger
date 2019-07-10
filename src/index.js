@@ -33,13 +33,15 @@ export default class ObjectLogger extends React.Component {
         // 变更记录列表
         logList: PropTypes.array,
         // 语言设置
-        lang: PropTypes.string
+        lang: PropTypes.string,
+        fileUrl: PropTypes.string
     };
 
     static defaultProps = {
         title: '变更记录',
         logList: [],
-        lang: 'en'
+        lang: 'en',
+        fileUrl: 'http://localhost:9527/file'
     };
 
     genDisplayStyle(value) {
@@ -113,7 +115,7 @@ export default class ObjectLogger extends React.Component {
 
     render() {
         const { logToggleStatus, modalStatus, imageSrc } = this.state;
-        const { title, logList, lang } = this.props;
+        const { title, logList, lang, fileUrl } = this.props;
         let messages = {};
         messages['en'] = en_US;
         messages['zh'] = zh_CN;
@@ -203,7 +205,7 @@ export default class ObjectLogger extends React.Component {
                                                                         attr.diffValue && attr.diffValue.add && attr.diffValue.add.map((file, index) => {
 
                                                                             file = {
-                                                                                src: `http://localhost:9527/file/${file.fileId}`,
+                                                                                src: `${fileUrl}/${file.fileId}`,
                                                                                 name: file.fileName,
                                                                                 fileId: file.fileId,
                                                                                 type: this.judgeType(file.contentType, file.fileType)
@@ -216,21 +218,21 @@ export default class ObjectLogger extends React.Component {
                                                                                         <div className={styles.attachmentWrapper}
                                                                                              style={this.genDisplayStyle(file.type === 'image')}>
                                                                                             <div className={styles.fileItem}
-                                                                                                 title="点击查看"
+                                                                                                 title={"click to show"}
                                                                                                  onClick={() => this.showPic(file.src)}>
                                                                                                 <span className={styles.fileIcon}><FaImage /></span> {file.name}
                                                                                             </div>
                                                                                         </div>
                                                                                         <div className={styles.attachmentWrapper}
                                                                                              style={this.genDisplayStyle(file.type === 'video')}>
-                                                                                            <div className={styles.fileItem} title="音频文件">
+                                                                                            <div className={styles.fileItem} title="video">
                                                                                                 <span className={styles.fileIcon}><FaVideo /></span> {file.name}
                                                                                             </div>
                                                                                         </div>
                                                                                         <div className={styles.attachmentWrapper}
                                                                                              style={this.genDisplayStyle(file.type === 'text')}>
                                                                                             <div className={styles.file}
-                                                                                                 title="点击下载"
+                                                                                                 title={"download"}
                                                                                                  onClick={() => this.downloadFile(file)}>
                                                                                                 <span className={styles.fileIcon}><FaRegFileAlt /></span> {file.name}
                                                                                             </div>
@@ -238,7 +240,7 @@ export default class ObjectLogger extends React.Component {
                                                                                         <div className={styles.attachmentWrapper}
                                                                                              style={this.genDisplayStyle(file.type === 'pdf')}>
                                                                                             <div className={styles.file}
-                                                                                                 title="点击下载"
+                                                                                                 title={"download"}
                                                                                                  onClick={() => this.downloadFile(file)}>
                                                                                                 <span className={styles.fileIcon}><FaFilePdf /></span> {file.name}
                                                                                             </div>
@@ -246,7 +248,7 @@ export default class ObjectLogger extends React.Component {
                                                                                         <div className={styles.attachmentWrapper}
                                                                                              style={this.genDisplayStyle(file.type === 'rar')}>
                                                                                             <div className={styles.file}
-                                                                                                 title="点击下载"
+                                                                                                 title={"download"}
                                                                                                  onClick={() => this.downloadFile(file)}>
                                                                                                 <span className={styles.fileIcon}><FaRegFileArchive /></span> {file.name}
                                                                                             </div>
@@ -254,7 +256,7 @@ export default class ObjectLogger extends React.Component {
                                                                                         <div className={styles.attachmentWrapper}
                                                                                              style={this.genDisplayStyle(file.type === 'excel')}>
                                                                                             <div className={styles.file}
-                                                                                                 title="点击下载"
+                                                                                                 title={"download"}
                                                                                                  onClick={() => this.downloadFile(file)}>
                                                                                                 <span className={styles.fileIcon}><FaFileExcel /></span> {file.name}
                                                                                             </div>
@@ -262,7 +264,7 @@ export default class ObjectLogger extends React.Component {
                                                                                         <div className={styles.attachmentWrapper}
                                                                                              style={this.genDisplayStyle(file.type === 'word')}>
                                                                                             <div className={styles.file}
-                                                                                                 title="点击下载"
+                                                                                                 title={"download"}
                                                                                                  onClick={() => this.downloadFile(file)}>
                                                                                                 <span className={styles.fileIcon}><FaFileWord /></span> {file.name}
                                                                                             </div>
@@ -270,7 +272,7 @@ export default class ObjectLogger extends React.Component {
                                                                                         <div className={styles.attachmentWrapper}
                                                                                              style={this.genDisplayStyle(file.type === 'file')}>
                                                                                             <div className={styles.file}
-                                                                                                 title="点击下载"
+                                                                                                 title={"download"}
                                                                                                  onClick={() => this.downloadFile(file)}>
                                                                                                 <span className={styles.fileIcon}><FaRegFileAlt /></span> {file.name}
                                                                                             </div>
@@ -283,12 +285,12 @@ export default class ObjectLogger extends React.Component {
                                                                 </div>
                                                                 <div className={styles.fileTitle}
                                                                      style={this.genDisplayStyle(attr.diffValue && attr.diffValue.del && attr.diffValue.del.length > 0)}>
-                                                                    删除的附件如下：</div>
+                                                                    <FormattedMessage id="deletedAttachment" />：</div>
                                                                 <div className={styles.logFileWrapper}>
                                                                     {
                                                                         attr.diffValue && attr.diffValue.del && attr.diffValue.del.map((file, index) => {
                                                                             file = {
-                                                                                src: `http://localhost:9527/file/${file.fileId}`,
+                                                                                src: `${fileUrl}/${file.fileId}`,
                                                                                 name: file.fileName,
                                                                                 fileId: file.fileId,
                                                                                 type: this.judgeType(file.contentType, file.fileType)
@@ -300,21 +302,21 @@ export default class ObjectLogger extends React.Component {
                                                                                         <div className={styles.attachmentWrapper}
                                                                                              style={this.genDisplayStyle(file.type === 'image')}>
                                                                                             <div className={styles.fileItem}
-                                                                                                 title="点击查看"
+                                                                                                 title={"click to show"}
                                                                                                  onClick={() => this.showPic(file.src)}>
                                                                                                 <span className={styles.fileIcon}><FaImage /></span> {file.name}
                                                                                             </div>
                                                                                         </div>
                                                                                         <div className={styles.attachmentWrapper}
                                                                                              style={this.genDisplayStyle(file.type === 'video')}>
-                                                                                            <div className={styles.fileItem} title="音频文件">
+                                                                                            <div className={styles.fileItem} title="video">
                                                                                                 <span className={styles.fileIcon}><FaVideo /></span> {file.name}
                                                                                             </div>
                                                                                         </div>
                                                                                         <div className={styles.attachmentWrapper}
                                                                                              style={this.genDisplayStyle(file.type === 'text')}>
                                                                                             <div className={styles.file}
-                                                                                                 title="点击下载"
+                                                                                                 title={"download"}
                                                                                                  onClick={() => this.downloadFile(file)}>
                                                                                                 <span className={styles.fileIcon}><FaRegFileAlt /></span> {file.name}
                                                                                             </div>
@@ -322,7 +324,7 @@ export default class ObjectLogger extends React.Component {
                                                                                         <div className={styles.attachmentWrapper}
                                                                                              style={this.genDisplayStyle(file.type === 'pdf')}>
                                                                                             <div className={styles.file}
-                                                                                                 title="点击下载"
+                                                                                                 title={"download"}
                                                                                                  onClick={() => this.downloadFile(file)}>
                                                                                                 <span className={styles.fileIcon}><FaFilePdf /></span> {file.name}
                                                                                             </div>
@@ -330,7 +332,7 @@ export default class ObjectLogger extends React.Component {
                                                                                         <div className={styles.attachmentWrapper}
                                                                                              style={this.genDisplayStyle(file.type === 'rar')}>
                                                                                             <div className={styles.file}
-                                                                                                 title="点击下载"
+                                                                                                 title={"download"}
                                                                                                  onClick={() => this.downloadFile(file)}>
                                                                                                 <span className={styles.fileIcon}><FaRegFileArchive /></span> {file.name}
                                                                                             </div>
@@ -338,7 +340,7 @@ export default class ObjectLogger extends React.Component {
                                                                                         <div className={styles.attachmentWrapper}
                                                                                              style={this.genDisplayStyle(file.type === 'excel')}>
                                                                                             <div className={styles.file}
-                                                                                                 title="点击下载"
+                                                                                                 title={"download"}
                                                                                                  onClick={() => this.downloadFile(file)}>
                                                                                                 <span className={styles.fileIcon}><FaFileExcel /></span> {file.name}
                                                                                             </div>
@@ -346,7 +348,7 @@ export default class ObjectLogger extends React.Component {
                                                                                         <div className={styles.attachmentWrapper}
                                                                                              style={this.genDisplayStyle(file.type === 'word')}>
                                                                                             <div className={styles.file}
-                                                                                                 title="点击下载"
+                                                                                                 title={"download"}
                                                                                                  onClick={() => this.downloadFile(file)}>
                                                                                                 <span className={styles.fileIcon}><FaFileWord /></span> {file.name}
                                                                                             </div>
@@ -354,7 +356,7 @@ export default class ObjectLogger extends React.Component {
                                                                                         <div className={styles.attachmentWrapper}
                                                                                              style={this.genDisplayStyle(file.type === 'file')}>
                                                                                             <div className={styles.file}
-                                                                                                 title="点击下载"
+                                                                                                 title={"download"}
                                                                                                  onClick={() => this.downloadFile(file)}>
                                                                                                 <span className={styles.fileIcon}><FaRegFileAlt /></span> {file.name}
                                                                                             </div>
