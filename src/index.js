@@ -33,7 +33,7 @@ export default class ObjectLogger extends React.Component {
     }
 
     componentWillMount() {
-        const { logList } = this.state, toggleStatus = {};
+        const { logList } = this.props, toggleStatus = {};
         logList.forEach((log) =>{
             toggleStatus[log.id] = false;
         });
