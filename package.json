@@ -1,6 +1,6 @@
 {
   "name": "react-object-logger",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "react object logger",
   "repository": "promise-coding/react-object-logger",
   "main": "lib/index.js",
@@ -51,6 +51,7 @@
   "dependencies": {
     "lodash": "^4.17.11",
     "moment": "^2.24.0",
-    "react-icons": "^3.7.0"
+    "react-icons": "^3.7.0",
+    "react-intl": "^2.9.0"
   }
 }

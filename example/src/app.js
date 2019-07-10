@@ -132,6 +132,6 @@ const logList = [
     }
 ];
 
-const App = () => <ObjectLogger logList={logList} />;
+const App = () => <ObjectLogger logList={logList} lang="en" />;
 
 render(<App />, document.getElementById('root'));
