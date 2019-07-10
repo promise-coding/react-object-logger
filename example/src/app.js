@@ -1,6 +1,6 @@
 import React from 'react'
 import { render } from 'react-dom'
-import ObjectLogger from '../../src/app'
+import ObjectLogger from '../../src/index'
 
 const logList = [
     {
