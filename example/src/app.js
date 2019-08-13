@@ -158,6 +158,6 @@ const logList = [
 ];
 
 const App = () => <ObjectLogger logList={logList} lang="zh" attachmentStyle="origin"
-                                fileUrl="http://localhost:9527/file" />;
+                                fileUrl="" />;
 
 render(<App />, document.getElementById('root'));

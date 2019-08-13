@@ -63,7 +63,7 @@ export default class ObjectLogger extends React.Component {
         title: '',
         logList: [],
         lang: 'en',
-        fileUrl: 'http://localhost:9527/file',
+        fileUrl: '',
         attachmentStyle: 'origin'
     };
 
@@ -142,7 +142,7 @@ export default class ObjectLogger extends React.Component {
     }
 
     genAttachmentBlock(file) {
-        const { attachmentStyle } = this.props;
+        const { attachmentStyle, fileUrl } = this.props;
         let block = "";
 
         for(let i=0; i< this.attachmentList.length; i++) {
@@ -158,7 +158,7 @@ export default class ObjectLogger extends React.Component {
                                 attachmentStyle === 'icon' ?
                                     <span><span className={styles.fileIcon}>{attachment.icon}</span> {file.name}</span> :
                                     <div className={styles.attachment}
-                                         onClick={() => {attachment.type === 'image' ? this.showPic(file.src) : this.downloadFile(file)}}>
+                                         onClick={() => {fileUrl ? (attachment.type === 'image' ? this.showPic(file.src) : this.downloadFile(file)) : {}} }>
                                         <img className={styles.img}
                                              src={attachment.type === 'image' ? file.src : attachment.image} alt={attachment.type}/>
                                         <div className={styles.imgTitle}>{file.name}</div>
