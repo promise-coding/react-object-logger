@@ -1,4 +1,6 @@
 const path = require('path');
+// 导入每次删除文件夹的插件
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const htmlWebpackPlugin = new HtmlWebpackPlugin({
@@ -24,16 +26,30 @@ module.exports = {
                 fallback: 'style-loader',
                 //如果需要，可以在 sass-loader 之前将 resolve-url-loader 链接进来
                 use: [
-                	{loader: 'css-loader',
-						options: { modules: {
+                	{
+                		loader: 'css-loader',
+						options: {
+                			modules: {
                                 mode: 'local',
                                 localIdentName: '[name]__[local]--[hash:base64:5]'
-                            },}},
+                            },
+						}
+					},
 					'sass-loader']
             })
-        }]
+		},
+            {
+                test: /\.(png|jpe?g|gif|bmp)$/i,
+                loader: 'file-loader',
+                options: {
+                    name: '[name]-[hash:8].[ext]',
+                    outputPath: 'images',
+                },
+            },
+		]
 	},
 	plugins: [
+        new CleanWebpackPlugin(),
 		htmlWebpackPlugin,
         new ExtractTextPlugin('style.css')
     ],

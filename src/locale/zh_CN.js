@@ -3,6 +3,7 @@ const zh_CN = {
     logHistory: "变更记录",
     by: "由",
     update: "修改了",
+    version: "修改版本号",
     difference: "区别是 ",
     oldValue: "旧值为 ",
     newValue: "新值为 ",

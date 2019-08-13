@@ -3,6 +3,7 @@ const en_US = {
     logHistory: "LogHistory",
     by: "by",
     update: "modified",
+    version: "version ",
     difference: "the difference is ",
     oldValue: "the old value is ",
     newValue: "the new value is ",

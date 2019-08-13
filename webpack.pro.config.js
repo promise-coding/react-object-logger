@@ -2,6 +2,11 @@ const path = require('path');
 // 导入每次删除文件夹的插件
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
+// 压缩js文件
+const TerserPlugin = require('terser-webpack-plugin');
+
+const webpack = require('webpack');
+
 // 导入抽取CSS的插件
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 // 导入压缩CSS的插件
@@ -9,7 +14,6 @@ const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 module.exports = {
     entry: path.join(__dirname, './src/index.js'),
-    devtool: 'cheap-module-source-map',
     mode: 'production',
     output: {
         path: path.join(__dirname, './lib'),
@@ -20,8 +24,16 @@ module.exports = {
     plugins: [ // 插件
         new CleanWebpackPlugin(),
         new ExtractTextPlugin("css/styles.css"), // 抽取CSS文件
-        new OptimizeCssAssetsPlugin()// 压缩CSS的插件
+        new OptimizeCssAssetsPlugin(), // 压缩CSS的插件
+        new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/), //排除moment语言包
     ],
+    optimization: {
+        minimizer: [
+            new TerserPlugin({
+                parallel: true
+            })
+        ],
+    },
     module: {
         rules: [
             {
@@ -53,8 +65,20 @@ module.exports = {
                     publicPath: '../'
                 })
             },
-            { test: /\.(jpg|png|gif|bmp|jpeg)$/, use: 'url-loader?limit=5000&name=images/[hash:8]-[name].[ext]' },
-            { test: /\.(ttf|eot|svg|woff|woff2)$/, use: 'url-loader?limit=5000&name=images/[hash:8]-[name].[ext]' },
+            { test: /\.(jpg|png|gif|bmp|jpeg)$/,
+                loader: 'file-loader',
+                options: {
+                    name: '[name]-[hash:8].[ext]',
+                    outputPath: 'images',
+                }, 
+            },
+            { test: /\.(ttf|eot|svg|woff|woff2)$/,
+                loader: 'file-loader',
+                options: {
+                    name: '[name]-[hash:8].[ext]',
+                    outputPath: 'images',
+                }, 
+            },
             { test: /\.(js|jsx)$/, use: 'babel-loader', exclude: /node_modules/ }
         ]
     }

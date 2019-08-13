@@ -1,10 +1,10 @@
 import React, {Fragment} from 'react';
 import styles from './style.scss';
 import PropTypes from 'prop-types';
-import { FaMinusSquare, FaPlusSquare, FaImage, FaFilePdf,
+import { FaMinusSquare, FaPlusSquare, FaImage, FaFilePdf, FaFilePowerpoint,
     FaFileExcel, FaFileWord, FaRegFileAlt, FaVideo, FaRegFileAudio, FaRegFileArchive } from 'react-icons/fa';
 import moment from 'moment';
-import _ from 'lodash';
+import cloneDeep from 'lodash/cloneDeep';
 /* react-intl imports */
 import { addLocaleData, IntlProvider, FormattedMessage } from 'react-intl';
 import en from 'react-intl/locale-data/en';
@@ -17,6 +17,16 @@ import zh_CN from "./locale/zh_CN"
 // import defined messages in English
 import en_US from "./locale/en_US"
 
+import audioImg from "./images/audio.png";
+import excelImg from "./images/excel.png";
+import fileImg from "./images/file.png";
+import pdfImg from "./images/pdf.png";
+import pptImg from "./images/ppt.png";
+import rarImg from "./images/rar.png";
+import textImg from "./images/text.png";
+import videoImg from "./images/video.png";
+import wordImg from "./images/word.png";
+
 export default class ObjectLogger extends React.Component {
     constructor(props) {
         super(props);
@@ -25,6 +35,17 @@ export default class ObjectLogger extends React.Component {
             imageSrc: '',
             logToggleStatus: {}
         };
+        this.attachmentList = [
+            {type: "image", image: "", icon: '<FaImage />'},
+            {type: "audio", image: audioImg, icon: '<FaRegFileAudio />'},
+            {type: "excel", image: excelImg, icon: '<FaFileExcel />'},
+            {type:"files", image: fileImg, icon: '<FaRegFileAlt />'},
+            {type:"pdf", image: pdfImg, icon: '<FaFilePdf />'},
+            {type:"ppt", image: pptImg, icon: '<FaFilePowerpoint />'},
+            {type:"rar", image: rarImg, icon: '<FaRegFileArchive />'},
+            {type:"text", image: textImg, icon: '<FaRegFileAlt />'},
+            {type:"video", image: videoImg, icon: '<FaVideo />'},
+            {type: "word", image: wordImg, icon: '<FaFileWord />'}];
     }
 
     static propTypes = {
@@ -34,14 +55,16 @@ export default class ObjectLogger extends React.Component {
         logList: PropTypes.array,
         // 语言设置
         lang: PropTypes.string,
-        fileUrl: PropTypes.string
+        fileUrl: PropTypes.string,
+        attachmentStyle: PropTypes.string
     };
 
     static defaultProps = {
-        title: '变更记录',
+        title: '',
         logList: [],
         lang: 'en',
-        fileUrl: 'http://localhost:9527/file'
+        fileUrl: 'http://localhost:9527/file',
+        attachmentStyle: 'origin'
     };
 
     genDisplayStyle(value) {
@@ -72,6 +95,8 @@ export default class ObjectLogger extends React.Component {
             return 'video';
         } else if (contentType.indexOf('image') === 0) {
             return 'image';
+        } else if (contentType.indexOf('audio') === 0) {
+            return 'audio';
         } else if (contentType.indexOf('text') === 0) {
             return 'text';
         } else if (contentType.indexOf('application/pdf') === 0) {
@@ -82,12 +107,15 @@ export default class ObjectLogger extends React.Component {
     }
 
     judgeBySuffix(suffix) {
-        if (suffix === 'rar' || suffix === 'zip') {
+        if (suffix === 'rar' || suffix === 'zip' || suffix === 'war' 
+        || suffix === 'tar' || suffix === 'jar' || suffix === '7z') {
             return 'rar';
         } else if (suffix === 'xlsx' || suffix === 'xls') {
             return 'excel';
         } else if (suffix === 'docx' || suffix === 'doc') {
             return 'word';
+        } else if (suffix === 'pptx' || suffix === 'ppt') {
+            return 'ppt';
         }
 
         return 'file';
@@ -99,7 +127,7 @@ export default class ObjectLogger extends React.Component {
     }
 
     toggleLog(id, status) {
-        const newStatueMap = _.cloneDeep(this.state.logToggleStatus);
+        const newStatueMap = cloneDeep(this.state.logToggleStatus);
 
         newStatueMap[id] = status;
         this.setState({logToggleStatus: newStatueMap});
@@ -111,6 +139,52 @@ export default class ObjectLogger extends React.Component {
 
     closeModal() {
         this.setState({imageSrc: '', modalStatus: false});
+    }
+
+    genAttachmentBlock(file) {
+        const { attachmentStyle } = this.props;
+        let block = "";
+
+        for(let i=0; i< this.attachmentList.length; i++) {
+            let attachment = this.attachmentList[i];
+
+            if (file.type === attachment.type) {
+                block = (
+                    <div className={styles.attachmentWrapper}
+                         key={`attachment-${i}`}>
+                        <div className={styles.fileItem}
+                             title={attachment.type === 'image' ? 'click to show' : 'download'}>
+                            {
+                                attachmentStyle === 'icon' ?
+                                    <span><span className={styles.fileIcon}>{attachment.icon}</span> {file.name}</span> :
+                                    <div className={styles.attachment}
+                                         onClick={() => {attachment.type === 'image' ? this.showPic(file.src) : this.downloadFile(file)}}>
+                                        <img className={styles.img}
+                                             src={attachment.type === 'image' ? file.src : attachment.image} alt={attachment.type}/>
+                                        <div className={styles.imgTitle}>{file.name}</div>
+                                    </div>
+                            }
+                        </div>
+                    </div>
+                );
+                break;
+            }
+        }
+
+        return block;
+    }
+
+    renderAttachment(file, index) {
+        return (
+            <div className={styles.fileListWrapper}
+                 key={index}>
+                <div className={styles.content}>
+                    {
+                        this.genAttachmentBlock(file)
+                    }
+                </div>
+            </div>
+        );
     }
 
     render() {
@@ -125,7 +199,7 @@ export default class ObjectLogger extends React.Component {
                 <Fragment>
                     {/*标题*/}
                     <div className={styles.logTitle}>
-                        {<FormattedMessage id="logHistory" />}
+                        { title ? title : <FormattedMessage id="logHistory" />}
                     </div>
 
                     <div>
@@ -179,6 +253,9 @@ export default class ObjectLogger extends React.Component {
                                              className={styles.logAttr}>
                                             {
                                                 log.attributeModelList && log.attributeModelList.map((attr, index) => {
+                                                    let diffValue =
+                                                        (attr.diffValue && attr.attributeType === 'RICHTEXT') ? JSON.parse(attr.diffValue) : {};
+
                                                     return (
                                                         <div className={styles.attrArea} key={index}>
                                                             <div className={styles.diffTextArea}>
@@ -186,15 +263,37 @@ export default class ObjectLogger extends React.Component {
                                                                 <div className={styles.attributeName}>
                                                                     {attr.attributeName}
                                                                 </div>
-                                                                <div style={this.genDisplayStyle(attr.attributeType === 'TEXT')}>
-                                                                    , <FormattedMessage id="difference" />：
+                                                                <div style={this.genDisplayStyle(attr.attributeType === 'RICHTEXT')}>
+                                                                    , <FormattedMessage id="version" />: {diffValue.version},  <FormattedMessage id="difference" />：
                                                                 </div>
-                                                                <div style={this.genDisplayStyle(attr.attributeType !== 'TEXT' && attr.attributeType !== 'ATTACHMENT')}>
+                                                                <div style={this.genDisplayStyle(attr.attributeType !== 'RICHTEXT' && attr.attributeType !== 'ATTACHMENT')}>
                                                                     , <FormattedMessage id="oldValue" />"{attr.oldValue}"，<FormattedMessage id="newValue" />"{attr.newValue}"
                                                                 </div>
                                                             </div>
-                                                            <div style={this.genDisplayStyle(attr.attributeType === 'TEXT')}
-                                                                 dangerouslySetInnerHTML={{__html: attr.diffValue}}>
+                                                            <div style={this.genDisplayStyle(attr.attributeType === 'RICHTEXT')} className={styles.diff}>
+                                                                {
+                                                                    diffValue && diffValue.content && diffValue.content.map((line, index) => {
+                                                                        return (
+                                                                            <div key={`line-${index}`}>
+                                                                                {
+                                                                                    line.partList && line.partList.map((part, index) => {
+                                                                                        return (
+                                                                                            <div className={styles.changePart} key={`text-${index}`}>
+                                                                                                <div className={`${styles.lineNumber} ${part.partType === 'CHANGE_OLD' ? styles.lineDel : styles.lineAdd}`}>
+                                                                                                    {line.lineNumber}
+                                                                                                </div>
+                                                                                                <div className={`${styles.changeText} ${part.partType === 'CHANGE_OLD' ? styles.lineDel : styles.lineAdd}`}>
+                                                                                                    {part.partType === 'CHANGE_OLD' ? '-' : '+'}&nbsp;&nbsp;&nbsp; {part.partContent}
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        );
+                                                                                    })
+                                                                                }
+                                                                            </div>
+                                                                        );
+                                                                    })
+                                                                }
+
                                                             </div>
                                                             <div className={styles.attachmentContent} style={this.genDisplayStyle(attr.attributeType === 'ATTACHMENT')}>
                                                                 <div className={styles.fileTitle}
@@ -212,73 +311,7 @@ export default class ObjectLogger extends React.Component {
                                                                             };
 
                                                                             return (
-                                                                                <div className={styles.fileListWrapper}
-                                                                                     key={index}>
-                                                                                    <div className={styles.content}>
-                                                                                        <div className={styles.attachmentWrapper}
-                                                                                             style={this.genDisplayStyle(file.type === 'image')}>
-                                                                                            <div className={styles.fileItem}
-                                                                                                 title={"click to show"}
-                                                                                                 onClick={() => this.showPic(file.src)}>
-                                                                                                <span className={styles.fileIcon}><FaImage /></span> {file.name}
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div className={styles.attachmentWrapper}
-                                                                                             style={this.genDisplayStyle(file.type === 'video')}>
-                                                                                            <div className={styles.fileItem} title="video">
-                                                                                                <span className={styles.fileIcon}><FaVideo /></span> {file.name}
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div className={styles.attachmentWrapper}
-                                                                                             style={this.genDisplayStyle(file.type === 'text')}>
-                                                                                            <div className={styles.file}
-                                                                                                 title={"download"}
-                                                                                                 onClick={() => this.downloadFile(file)}>
-                                                                                                <span className={styles.fileIcon}><FaRegFileAlt /></span> {file.name}
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div className={styles.attachmentWrapper}
-                                                                                             style={this.genDisplayStyle(file.type === 'pdf')}>
-                                                                                            <div className={styles.file}
-                                                                                                 title={"download"}
-                                                                                                 onClick={() => this.downloadFile(file)}>
-                                                                                                <span className={styles.fileIcon}><FaFilePdf /></span> {file.name}
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div className={styles.attachmentWrapper}
-                                                                                             style={this.genDisplayStyle(file.type === 'rar')}>
-                                                                                            <div className={styles.file}
-                                                                                                 title={"download"}
-                                                                                                 onClick={() => this.downloadFile(file)}>
-                                                                                                <span className={styles.fileIcon}><FaRegFileArchive /></span> {file.name}
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div className={styles.attachmentWrapper}
-                                                                                             style={this.genDisplayStyle(file.type === 'excel')}>
-                                                                                            <div className={styles.file}
-                                                                                                 title={"download"}
-                                                                                                 onClick={() => this.downloadFile(file)}>
-                                                                                                <span className={styles.fileIcon}><FaFileExcel /></span> {file.name}
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div className={styles.attachmentWrapper}
-                                                                                             style={this.genDisplayStyle(file.type === 'word')}>
-                                                                                            <div className={styles.file}
-                                                                                                 title={"download"}
-                                                                                                 onClick={() => this.downloadFile(file)}>
-                                                                                                <span className={styles.fileIcon}><FaFileWord /></span> {file.name}
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div className={styles.attachmentWrapper}
-                                                                                             style={this.genDisplayStyle(file.type === 'file')}>
-                                                                                            <div className={styles.file}
-                                                                                                 title={"download"}
-                                                                                                 onClick={() => this.downloadFile(file)}>
-                                                                                                <span className={styles.fileIcon}><FaRegFileAlt /></span> {file.name}
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
+                                                                               this.renderAttachment(file, index)
                                                                             )
                                                                         })
                                                                     }
@@ -297,72 +330,7 @@ export default class ObjectLogger extends React.Component {
                                                                             };
 
                                                                             return (
-                                                                                <div key={index} className={styles.fileListWrapper}>
-                                                                                    <div className="content">
-                                                                                        <div className={styles.attachmentWrapper}
-                                                                                             style={this.genDisplayStyle(file.type === 'image')}>
-                                                                                            <div className={styles.fileItem}
-                                                                                                 title={"click to show"}
-                                                                                                 onClick={() => this.showPic(file.src)}>
-                                                                                                <span className={styles.fileIcon}><FaImage /></span> {file.name}
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div className={styles.attachmentWrapper}
-                                                                                             style={this.genDisplayStyle(file.type === 'video')}>
-                                                                                            <div className={styles.fileItem} title="video">
-                                                                                                <span className={styles.fileIcon}><FaVideo /></span> {file.name}
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div className={styles.attachmentWrapper}
-                                                                                             style={this.genDisplayStyle(file.type === 'text')}>
-                                                                                            <div className={styles.file}
-                                                                                                 title={"download"}
-                                                                                                 onClick={() => this.downloadFile(file)}>
-                                                                                                <span className={styles.fileIcon}><FaRegFileAlt /></span> {file.name}
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div className={styles.attachmentWrapper}
-                                                                                             style={this.genDisplayStyle(file.type === 'pdf')}>
-                                                                                            <div className={styles.file}
-                                                                                                 title={"download"}
-                                                                                                 onClick={() => this.downloadFile(file)}>
-                                                                                                <span className={styles.fileIcon}><FaFilePdf /></span> {file.name}
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div className={styles.attachmentWrapper}
-                                                                                             style={this.genDisplayStyle(file.type === 'rar')}>
-                                                                                            <div className={styles.file}
-                                                                                                 title={"download"}
-                                                                                                 onClick={() => this.downloadFile(file)}>
-                                                                                                <span className={styles.fileIcon}><FaRegFileArchive /></span> {file.name}
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div className={styles.attachmentWrapper}
-                                                                                             style={this.genDisplayStyle(file.type === 'excel')}>
-                                                                                            <div className={styles.file}
-                                                                                                 title={"download"}
-                                                                                                 onClick={() => this.downloadFile(file)}>
-                                                                                                <span className={styles.fileIcon}><FaFileExcel /></span> {file.name}
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div className={styles.attachmentWrapper}
-                                                                                             style={this.genDisplayStyle(file.type === 'word')}>
-                                                                                            <div className={styles.file}
-                                                                                                 title={"download"}
-                                                                                                 onClick={() => this.downloadFile(file)}>
-                                                                                                <span className={styles.fileIcon}><FaFileWord /></span> {file.name}
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div className={styles.attachmentWrapper}
-                                                                                             style={this.genDisplayStyle(file.type === 'file')}>
-                                                                                            <div className={styles.file}
-                                                                                                 title={"download"}
-                                                                                                 onClick={() => this.downloadFile(file)}>
-                                                                                                <span className={styles.fileIcon}><FaRegFileAlt /></span> {file.name}
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
+                                                                                this.renderAttachment(file, index)
                                                                             )
                                                                         })
                                                                     }

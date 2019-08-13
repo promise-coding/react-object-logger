@@ -58,11 +58,34 @@ $primary-text-color-light: #868686;
                 padding-right: 5px;
             }
         }
+        .diff {
+            margin-top: 5px;
+        }
+        .changePart {
+            display: flex;
+            .lineNumber {
+                color: #9b9b9b;
+                padding: 2px 5px;
+                border-right: 1px solid #cccccc;
+            }
+            .changeText {
+                color: #404040;
+                padding: 2px 2px;
+            }
+            .lineDel {
+                background-color: #fbe9eb;
+            }
+            .lineAdd {
+                background-color: #ecfdf0;
+            }
+        }
     }
     .attachmentContent {
         padding: 2px 15px;
         .logFileWrapper {
+            display: flex;
             .fileListWrapper {
+                padding: 2px 5px;
                 >.content {
                     .attachmentWrapper {
                         >.fileItem, >.file {
@@ -70,6 +93,18 @@ $primary-text-color-light: #868686;
                             >.fileIcon {
                                 position: relative;
                                 top: 2px;
+                            }
+                        }
+                        .attachment {
+                            display: flex;
+                            flex-direction: column;
+                            >.img {
+                                width: 70px;
+                                height: 70px;
+                            }
+                            >.imgTitle {
+                                width: 70px;
+                                text-align: center;
                             }
                         }
                     }
