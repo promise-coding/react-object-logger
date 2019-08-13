@@ -12,7 +12,7 @@
     "build-dev": "webpack --config webpack.dev.config.js --progress --color",
     "build-pro": "webpack --config webpack.pro.config.js --progress --color",
     "deploy": "gh-pages -d example/dist",
-    "publish-demo": "npm run build && npm run deploy"
+    "publish-demo": "npm run build-dev && npm run deploy"
   },
   "keywords": [
     "react",
@@ -52,7 +52,7 @@
     "webpack-dev-server": "^3.7.2"
   },
   "dependencies": {
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.15",
     "moment": "^2.24.0",
     "react-icons": "^3.7.0",
     "react-intl": "^2.9.0"

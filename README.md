@@ -1,7 +1,7 @@
 ![NPM](https://img.shields.io/npm/l/react-object-logger.svg?style=popout) ![npm](https://img.shields.io/npm/v/react-object-logger.svg?style=flat-square)
 ## react-object-logger
 
-这是一个对象属性变更历史展示的组件
+这是一个对象属性变更历史展示的组件，查看[demo](https://promise-coding.github.io/react-object-logger/)
 
 ![demo](./image/ch.png)
 
