@@ -157,7 +157,7 @@ const logList = [
     }
 ];
 
-const App = () => <ObjectLogger logList={logList} lang="zh" attachmentStyle="origin"
+const App = () => <ObjectLogger logList={logList} lang="en" attachmentStyle="origin"
                                 fileUrl="" />;
 
 render(<App />, document.getElementById('root'));
