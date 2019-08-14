@@ -17,7 +17,7 @@
 `import ObjectLogger from 'react-object-logger';`  
 `import 'react-object-logger/lib/css/styles.css';`  
 3、使用  
-`<ObjectLogger logList={logList} lang="zh" fileUrl="http://localhost:9527/file" />`  
+`<ObjectLogger logList={logList} lang="zh" title="变更记录" attachmentStyle="origin" fileUrl="http://localhost:9527/file" />`  
 注意：  
 `this.logList`格式及具体字段含义请参考[ObjectLogger](https://github.com/yeecode/ObjectLogger)：
 也可以在本项目示例文件夹下进行对照参考：https://github.com/promise-coding/react-object-logger/tree/master/example/src

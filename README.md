@@ -17,7 +17,7 @@ The component collocates with the object-logger tool [ObjectLogger](https://gith
 `import ObjectLogger from 'react-object-logger';`  
 `import 'react-object-logger/lib/css/styles.css';`  
 3、demo  
-`<ObjectLogger logList={logList} lang="zh" fileUrl="http://localhost:9527/file" />`  
+`<ObjectLogger logList={logList} lang="en" title="LogHistory" attachmentStyle="origin" fileUrl="http://localhost:9527/file" />`  
 attentions：  
 `this.logList` which fields and what a field means please forward to [ObjectLogger](https://github.com/yeecode/ObjectLogger)：
 also, you can find the demo sources in this project：(source code path) https://github.com/promise-coding/react-object-logger/tree/master/example/src
