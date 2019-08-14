@@ -5,7 +5,7 @@
 
 英文 [README.md](https://github.com/promise-coding/react-object-logger/blob/master/README.md)
 
-![demo](./image/ch.png)
+![demo](./image/zh.png)
 
 # 配合使用
 该组件配合对象日志变更工具[ObjectLogger](https://github.com/yeecode/ObjectLogger)使用，用以展示对象的变更日志。
