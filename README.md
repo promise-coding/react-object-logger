@@ -11,25 +11,25 @@ Chinese [README.md](https://github.com/promise-coding/react-object-logger/blob/m
 The component collocates with the object-logger tool [ObjectLogger](https://github.com/yeecode/ObjectLogger)，which used for recording changed object attributes logs.
 
 # How to use
-1、download
-`npm install react-object-logger`
-2、import component and style
-`import ObjectLogger from 'react-object-logger';`
-`import 'react-object-logger/lib/css/styles.css';`
-3、demo
-`<ObjectLogger logList={logList} lang="zh" fileUrl="http://localhost:9527/file" />`
-attentions：
+1、download  
+`npm install react-object-logger`  
+2、import component and style  
+`import ObjectLogger from 'react-object-logger';`  
+`import 'react-object-logger/lib/css/styles.css';`  
+3、demo  
+`<ObjectLogger logList={logList} lang="zh" fileUrl="http://localhost:9527/file" />`  
+attentions：  
 `this.logList` which fields and what a field means please forward to [ObjectLogger](https://github.com/yeecode/ObjectLogger)：
 also, you can find the demo sources in this project：(source code path) https://github.com/promise-coding/react-object-logger/tree/master/example/src
 
-# component props
+# Component props
 - `title`：log listing title, the default value is empty string '', you can set any string value yourself；
 - `logList`；array type, log contents list；
 -  `lang`：log listing language, the default value is English('en'), you also set Chinese('zh')；
 -  `fileUrl`：if the logs contain file attachments, you could set `fileUrl` which stored these attachments for showing or downloading; the default value is empty string；
 -  `attachmentStyle`: attachments style, the default value is 'origin' which use build-in images for presenting; the other option is 'icon', icon and attachment name are presenting；
 
-supplements：
+# Supplements：  
 `logList` fields demo
 ```
 [
