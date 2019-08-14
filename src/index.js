@@ -351,7 +351,7 @@ export default class ObjectLogger extends React.Component {
 
                     <div className={styles.modalMask} style={modalStatus ? {display: 'block'} : {display: 'none'}}>
                         <div className={styles.modal}>
-                            <img src={imageSrc} alt="图片"/>
+                            <img src={imageSrc} alt="image"/>
                             <div onClick={() => this.closeModal()} className={styles.closeModal}>X</div>
                         </div>
                     </div>
