@@ -1,6 +1,6 @@
 {
   "name": "react-object-logger",
-  "version": "1.2.0",
+  "version": "1.2.2",
   "description": "react object logger",
   "repository": "promise-coding/react-object-logger",
   "main": "lib/index.js",

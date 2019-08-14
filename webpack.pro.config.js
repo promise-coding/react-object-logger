@@ -65,19 +65,20 @@ module.exports = {
                     publicPath: '../'
                 })
             },
-            { test: /\.(jpg|png|gif|bmp|jpeg)$/,
-                loader: 'file-loader',
+            {
+                test: /\.(png|jpe?g|gif|bmp)$/i,
+                loader: 'url-loader',
                 options: {
-                    name: '[name]-[hash:8].[ext]',
-                    outputPath: 'images',
-                }, 
+                    limit: 10240,
+                    name: 'images/[name]-[hash:8].[ext]'
+                },
             },
             { test: /\.(ttf|eot|svg|woff|woff2)$/,
                 loader: 'file-loader',
                 options: {
                     name: '[name]-[hash:8].[ext]',
                     outputPath: 'images',
-                }, 
+                },
             },
             { test: /\.(js|jsx)$/, use: 'babel-loader', exclude: /node_modules/ }
         ]

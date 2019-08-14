@@ -26,6 +26,7 @@ import rarImg from "./images/rar.png";
 import textImg from "./images/text.png";
 import videoImg from "./images/video.png";
 import wordImg from "./images/word.png";
+import imageImg from "./images/image.png";
 
 export default class ObjectLogger extends React.Component {
     constructor(props) {
@@ -36,16 +37,16 @@ export default class ObjectLogger extends React.Component {
             logToggleStatus: {}
         };
         this.attachmentList = [
-            {type: "image", image: "", icon: '<FaImage />'},
-            {type: "audio", image: audioImg, icon: '<FaRegFileAudio />'},
-            {type: "excel", image: excelImg, icon: '<FaFileExcel />'},
-            {type:"files", image: fileImg, icon: '<FaRegFileAlt />'},
-            {type:"pdf", image: pdfImg, icon: '<FaFilePdf />'},
-            {type:"ppt", image: pptImg, icon: '<FaFilePowerpoint />'},
-            {type:"rar", image: rarImg, icon: '<FaRegFileArchive />'},
-            {type:"text", image: textImg, icon: '<FaRegFileAlt />'},
-            {type:"video", image: videoImg, icon: '<FaVideo />'},
-            {type: "word", image: wordImg, icon: '<FaFileWord />'}];
+            {type: "image", image: imageImg, icon: <FaImage />},
+            {type: "audio", image: audioImg, icon: <FaRegFileAudio />},
+            {type: "excel", image: excelImg, icon: <FaFileExcel />},
+            {type:"files", image: fileImg, icon: <FaRegFileAlt />},
+            {type:"pdf", image: pdfImg, icon: <FaFilePdf />},
+            {type:"ppt", image: pptImg, icon: <FaFilePowerpoint />},
+            {type:"rar", image: rarImg, icon: <FaRegFileArchive />},
+            {type:"text", image: textImg, icon: <FaRegFileAlt />},
+            {type:"video", image: videoImg, icon: <FaVideo />},
+            {type: "word", image: wordImg, icon: <FaFileWord />}];
     }
 
     static propTypes = {
@@ -107,7 +108,7 @@ export default class ObjectLogger extends React.Component {
     }
 
     judgeBySuffix(suffix) {
-        if (suffix === 'rar' || suffix === 'zip' || suffix === 'war' 
+        if (suffix === 'rar' || suffix === 'zip' || suffix === 'war'
         || suffix === 'tar' || suffix === 'jar' || suffix === '7z') {
             return 'rar';
         } else if (suffix === 'xlsx' || suffix === 'xls') {
@@ -160,7 +161,7 @@ export default class ObjectLogger extends React.Component {
                                     <div className={styles.attachment}
                                          onClick={() => {fileUrl ? (attachment.type === 'image' ? this.showPic(file.src) : this.downloadFile(file)) : {}} }>
                                         <img className={styles.img}
-                                             src={attachment.type === 'image' ? file.src : attachment.image} alt={attachment.type}/>
+                                             src={attachment.type === 'image' ? (fileUrl ? file.src : attachment.image) : attachment.image} alt={attachment.type}/>
                                         <div className={styles.imgTitle}>{file.name}</div>
                                     </div>
                             }
@@ -199,7 +200,7 @@ export default class ObjectLogger extends React.Component {
                 <Fragment>
                     {/*标题*/}
                     <div className={styles.logTitle}>
-                        { title ? title : <FormattedMessage id="logHistory" />}
+                        { title }
                     </div>
 
                     <div>
@@ -264,7 +265,7 @@ export default class ObjectLogger extends React.Component {
                                                                     {attr.attributeName}
                                                                 </div>
                                                                 <div style={this.genDisplayStyle(attr.attributeType === 'RICHTEXT')}>
-                                                                    , <FormattedMessage id="version" />: {diffValue.version},  <FormattedMessage id="difference" />：
+                                                                    , <FormattedMessage id="difference" />：
                                                                 </div>
                                                                 <div style={this.genDisplayStyle(attr.attributeType !== 'RICHTEXT' && attr.attributeType !== 'ATTACHMENT')}>
                                                                     , <FormattedMessage id="oldValue" />"{attr.oldValue}"，<FormattedMessage id="newValue" />"{attr.newValue}"

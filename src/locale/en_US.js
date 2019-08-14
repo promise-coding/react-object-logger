@@ -7,8 +7,8 @@ const en_US = {
     difference: "the difference is ",
     oldValue: "the old value is ",
     newValue: "the new value is ",
-    addedAttachment: "added new attachments are",
-    deletedAttachment: "deleted new attachments are",
+    addedAttachment: "added attachments are",
+    deletedAttachment: "deleted attachments are",
     clickToShow: "click to show",
     clickToDownload: "download"
 };

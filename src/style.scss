@@ -90,7 +90,7 @@ $primary-text-color-light: #868686;
                     .attachmentWrapper {
                         >.fileItem, >.file {
                             cursor: pointer;
-                            >.fileIcon {
+                            .fileIcon {
                                 position: relative;
                                 top: 2px;
                             }

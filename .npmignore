@@ -1,7 +1,8 @@
 # .npmignore
 src
-examples
+example/
 .babelrc
 .gitignore
 webpack.dev.config.js
 .idea/
+image/

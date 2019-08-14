@@ -1,8 +1,38 @@
-import React from 'react'
-import { render } from 'react-dom'
-import ObjectLogger from '../../src/index'
+![NPM](https://img.shields.io/npm/l/react-object-logger.svg?style=popout) ![npm](https://img.shields.io/npm/v/react-object-logger.svg?style=flat-square)
+## react-object-logger
 
-const logList = [
+这是一个对象属性变更历史展示的组件，查看[demo](https://promise-coding.github.io/react-object-logger/)
+
+英文 [README.md](https://github.com/promise-coding/react-object-logger/blob/master/README.md)
+
+![demo](./image/ch.png)
+
+# 配合使用
+该组件配合对象日志变更工具[ObjectLogger](https://github.com/yeecode/ObjectLogger)使用，用以展示对象的变更日志。
+
+# 如何使用
+1、下载组件
+`npm install react-object-logger`
+2、应用组件
+`import ObjectLogger from 'react-object-logger';`
+`import 'react-object-logger/lib/css/styles.css';`
+3、使用
+`<ObjectLogger logList={logList} lang="zh" fileUrl="http://localhost:9527/file" />`
+注意：
+`this.logList`格式及具体字段含义请参考[ObjectLogger](https://github.com/yeecode/ObjectLogger)：
+也可以在本项目示例文件夹下进行对照参考：https://github.com/promise-coding/react-object-logger/tree/master/example/src
+
+# 参数配置
+- `title`：为日志展示的标题，默认为空串''，可自定义覆盖默认值；
+- `logList`；日志列表，数组类型；
+-  `lang`：显示语言，目前支持英文和中文，lang="en"为英文展示，lang="zh"为中文展示，默认是英文；
+-  `fileUrl`：如果修改的是文件类型，日志中展示源文件，需要一个文件存储的url，用于下载(可不设)；
+-  `attachmentStyle`: 修改的附件显示样式，默认是`origin`,也就是示例图所示的样子，大图标显示；当值为`icon`时，附件的图标展示位icon；
+
+附：
+logList数据样例
+```
+[
     {
         "id": 4,
         "appName": "ObjectLoggerDemo",
@@ -158,9 +188,5 @@ const logList = [
             }
         ]
     }
-];
-
-const App = () => <ObjectLogger logList={logList} lang="en" title="LogHistory" attachmentStyle="origin"
-                                fileUrl="" />;
-
-render(<App />, document.getElementById('root'));
+]
+```
